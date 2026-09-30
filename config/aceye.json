@@ -1,0 +1,68 @@
+{
+  "capture": {
+    "fps": 30,
+    "output": 0,
+    "backend": "auto"
+  },
+  "detection": {
+    "enabled": true,
+    "weights": "models/yolo26n-seg.pt",
+    "device": "cuda:0",
+    "imgsz": [
+      544,
+      960
+    ],
+    "confidence": 0.25,
+    "tracker": "bytetrack.yaml",
+    "half": true
+  },
+  "ocr": {
+    "enabled": true,
+    "interval": 6,
+    "device": "cuda:0",
+    "weights": "models/ocr"
+  },
+  "sam": {
+    "enabled": false,
+    "weights": "models/sam2.1_t.pt",
+    "device": "cuda:0",
+    "max_objects": 3
+  },
+  "reasoner": {
+    "enabled": true,
+    "backend": "local",
+    "model": "models/Qwen3-VL-2B-Instruct",
+    "model_dir": "models/Qwen3-VL-2B-Instruct",
+    "endpoint": "http://127.0.0.1:1234/v1/chat/completions",
+    "interval": 1.0,
+    "goal": "理解当前屏幕状态，输出事件、风险和建议动作。",
+    "max_new_tokens": 192,
+    "image_max_side": 768,
+    "load_in_4bit": true
+  },
+  "rhythm": {
+    "enabled": false,
+    "game": "muse_dash",
+    "capture_fps": 120,
+    "target_fps": 120,
+    "roi_capture": true,
+    "roi": null,
+    "latency_compensation": true,
+    "input_backend": "sendinput",
+    "safety_stop_key": "f8",
+    "profile": "config/profiles/muse_dash.json"
+  },
+  "profile": "desktop",
+  "output": {
+    "overlay": true,
+    "print_text": false
+  },
+  "automation": {
+    "enabled": false,
+    "dry_run": true
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8765
+  }
+}

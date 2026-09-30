@@ -1,0 +1,14 @@
+{
+  "name": "osu!",
+  "mode": "rhythm",
+  "game": "osu",
+  "capture": {"backend": "auto", "fps": 120, "roi": [0, 0, 0, 0]},
+  "vision_backend": "rhythm_cv",
+  "input_mapping": {"primary": "mouse_left", "secondary": "mouse_right"},
+  "ocr": {"enabled": false},
+  "sam": {"enabled": false},
+  "vlm": {"enabled": false},
+  "latency_budget_ms": 12,
+  "action_policy": "dry_run",
+  "calibration_profile": "config/profiles/osu_calibration.json"
+}

@@ -1,0 +1,7 @@
+{
+  "capture_latency_ms": 0.0,
+  "processing_latency_ms": 0.0,
+  "display_latency_offset_ms": 0.0,
+  "input_delivery_offset_ms": 0.0,
+  "user_game_offset_ms": 0.0
+}

@@ -1,0 +1,4 @@
+# Small runtime set; model runtimes are opt-in in adapters/requirements-models.txt.
+numpy>=1.26
+Pillow>=10.4
+mss>=9.0

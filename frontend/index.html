@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0f18">
+  <title>ACEYE · 视觉自动化控制台</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">A</div>
+        <div>
+          <strong>ACEYE</strong>
+          <span>Vision automation</span>
+        </div>
+      </div>
+
+      <div class="side-status">
+        <span id="sideDot" class="status-dot"></span>
+        <span id="sidePhase">连接中</span>
+        <span id="sideVersion" class="muted">—</span>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">⌂</span>运行总览</button>
+        <button class="nav-item" data-view="pipeline"><span class="nav-icon">◈</span>模块管线</button>
+        <button class="nav-item" data-view="reasoning"><span class="nav-icon">✦</span>理解与反馈</button>
+        <button class="nav-item" data-view="config"><span class="nav-icon">⚙</span>运行配置</button>
+        <button class="nav-item" data-view="logs"><span class="nav-icon">≡</span>运行日志</button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="safety-badge"><span class="shield">✓</span><span>自动化保护已启用</span></div>
+        <p>Rhythm 默认发送真实键盘输入，按 F8 停止。通用自动化使用独立的演练设置。</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">实时视觉智能系统</p>
+          <h1 id="pageTitle">运行总览</h1>
+        </div>
+        <div class="top-actions">
+          <label class="mode-select"><span>模式</span><select id="modeSelect"><option value="desktop">Desktop</option><option value="osu">osu!</option><option value="muse_dash">Muse Dash</option><option value="minecraft">Minecraft</option><option value="custom">Custom</option></select></label>
+          <div class="connection"><span id="connectionDot" class="status-dot"></span><span id="connectionText">连接检查中</span></div>
+          <button class="button button-ghost" id="refreshButton" title="立即刷新状态">刷新状态</button>
+          <button class="button button-danger" id="emergencyButton">紧急停止</button>
+        </div>
+      </header>
+
+      <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+
+      <section class="view active" id="view-overview">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <div class="phase-line"><span id="phasePill" class="phase-pill stopped">已停止</span><span id="phaseHint">等待启动视觉管线</span></div>
+            <h2>把屏幕变成可理解、可操作的上下文。</h2>
+            <p>ACEYE 只展示结构化的检测、文字和推理结果，不打开实时预览窗口。你可以用下方命令快速改变运行参数。</p>
+            <div class="hero-buttons">
+              <button class="button button-primary button-large" id="startButton"><span class="button-indicator"></span>一键启动</button>
+              <button class="button button-secondary button-large" id="stopButton">停止管线</button>
+            </div>
+          </div>
+          <div class="hero-orbit" aria-hidden="true"><div class="orbit-ring ring-a"></div><div class="orbit-ring ring-b"></div><div class="orbit-core">AE</div><i class="orbit-node node-a"></i><i class="orbit-node node-b"></i><i class="orbit-node node-c"></i></div>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric-card"><div class="metric-head"><span>捕获帧率</span><span class="metric-chip blue">CAPTURE</span></div><strong id="metricCapture">—</strong><span class="metric-unit">FPS</span><p class="metric-sub">队列 <b id="metricQueue">0</b></p><div class="metric-bar"><i id="captureBar"></i></div></article>
+          <article class="metric-card"><div class="metric-head"><span>视觉吞吐</span><span class="metric-chip violet">VISION</span></div><strong id="metricVision">—</strong><span class="metric-unit">FPS</span><p class="metric-sub">YOLO <b id="metricYoloLatency">0</b> ms</p><div class="metric-bar violet-bar"><i id="visionBar"></i></div></article>
+          <article class="metric-card"><div class="metric-head"><span>端到端延迟</span><span class="metric-chip green">LATENCY</span></div><strong id="metricLatency">—</strong><span class="metric-unit">MS</span><p class="metric-sub">最新结果年龄 <b id="metricAge">0</b> ms</p><div class="latency-track"><i id="latencyBar"></i></div></article>
+          <article class="metric-card"><div class="metric-head"><span>已处理帧</span><span class="metric-chip amber">FRAMES</span></div><strong id="metricFrames">—</strong><span class="metric-unit">TOTAL</span><p class="metric-sub">丢弃 <b id="metricDropped">—</b> 帧</p></article>
+        </div>
+
+        <section class="panel rhythm-panel">
+          <div class="panel-heading"><div><p class="eyebrow">RHYTHM FAST PATH</p><h3>音游实时链</h3></div><span id="rhythmStatus" class="module-status">stopped</span></div>
+          <div class="rhythm-grid">
+            <div><small>游戏</small><b id="rhythmGame">muse_dash</b></div>
+            <div><small>捕获</small><b><span id="rhythmCapture">0</span> FPS</b></div>
+            <div><small>检测音符</small><b id="rhythmNotes">0</b></div>
+            <div><small>已调度动作</small><b id="rhythmScheduled">0</b></div>
+            <div><small>真实输入</small><b id="rhythmInputCount">0</b></div>
+            <div><small>前台守卫</small><b id="rhythmForeground" class="module-status">—</b></div>
+            <div><small>已抑制输入</small><b id="rhythmSuppressed">0</b></div>
+            <div><small>预测击打</small><b id="rhythmHit">—</b></div>
+            <div class="rhythm-wide"><small>最近动作</small><b id="rhythmAction">—</b></div>
+            <div class="rhythm-wide"><small>输入桥返回</small><b id="rhythmInputStatus">尚未调用</b></div>
+            <div class="rhythm-wide"><small>错误信息</small><b id="rhythmError">无</b></div>
+          </div>
+          <div class="panel-actions"><button class="button button-secondary button-small" id="rhythmStartButton">启动 Rhythm</button><button class="button button-ghost button-small" id="rhythmStopButton">停止 Rhythm</button><span class="panel-note" id="rhythmSafety">已停止 · 启动后使用真实输入 · F8 安全停止</span></div>
+        </section>
+
+        <div class="content-grid two-one">
+          <section class="panel"><div class="panel-heading"><div><p class="eyebrow">PIPELINE HEALTH</p><h3>模块状态</h3></div><button class="text-button" data-view-target="pipeline">查看详情 →</button></div><div id="moduleSummary" class="module-summary"></div></section>
+          <section class="panel command-panel"><div class="panel-heading"><div><p class="eyebrow">COMMAND CENTER</p><h3>快捷指令</h3></div><span class="shortcut">Enter</span></div><form id="commandForm" class="command-form"><span class="prompt-symbol">›</span><input id="commandInput" autocomplete="off" placeholder="输入 /help 查看指令…" aria-label="输入 ACEYE 指令"><button type="submit" class="icon-button" aria-label="发送指令">↵</button></form><div class="quick-commands"><button data-command="/start">/start</button><button data-command="/fps 30">/fps 30</button><button data-command="/ocr on">/ocr on</button><button data-command="/reason">/reason</button><button data-command="/help">/help</button></div><div id="lastCommand" class="last-command">尚未发送指令</div></section>
+        </div>
+
+        <div class="content-grid two-one">
+          <section class="panel"><div class="panel-heading"><div><p class="eyebrow">LATEST VISION</p><h3>最新识别结果</h3></div><span id="visionFrame" class="panel-meta">FRAME —</span></div><div id="visionResults" class="result-stack empty-state">等待视觉管线输出</div></section>
+          <section class="panel"><div class="panel-heading"><div><p class="eyebrow">EVENT STREAM</p><h3>事件摘要</h3></div></div><div id="eventResults" class="event-list empty-state">暂无事件</div></section>
+        </div>
+      </section>
+
+      <section class="view" id="view-pipeline">
+        <div class="section-intro"><p class="eyebrow">MODULAR RUNTIME</p><h2>模块管线</h2><p>各模块通过稳定的数据契约连接，可独立替换模型和实现。准备动作可能触发模型安装或下载，请等待后端日志完成。</p></div>
+        <div id="moduleCards" class="module-grid"></div>
+      </section>
+
+      <section class="view" id="view-reasoning">
+        <div class="section-intro"><p class="eyebrow">TEXT-FIRST INTELLIGENCE</p><h2>理解与反馈</h2><p>发送给 VLM/LLM 的上下文与生成的输入动作均以纯文本展示，不嵌入截图预览。</p></div>
+        <div class="content-grid reasoning-grid"><section class="panel"><div class="panel-heading"><div><p class="eyebrow">REASONING OUTPUT</p><h3>模型理解</h3></div><button class="button button-small button-secondary" id="reasonButton">立即理解</button></div><pre id="reasoningText" class="text-output">等待模型输出…</pre></section><section class="panel"><div class="panel-heading"><div><p class="eyebrow">INPUT FEEDBACK</p><h3>输入动作</h3></div><span id="actionMode" class="mode-label">DRY RUN</span></div><div id="actionsList" class="action-list empty-state">暂无输入动作</div><div class="panel-note">动作会先进入安全门控；演练模式只记录，不操作鼠标键盘。</div></section></div>
+        <section class="panel prompt-panel"><div class="panel-heading"><div><p class="eyebrow">CURRENT GOAL</p><h3>理解目标</h3></div><button class="text-button" id="goalEditButton">去配置 →</button></div><div id="goalText" class="goal-box">尚未设置目标</div></section>
+      </section>
+
+      <section class="view" id="view-config">
+        <div class="section-intro"><p class="eyebrow">RUNTIME CONFIGURATION</p><h2>运行配置</h2><p>修改后点击保存提交到后端。模型路径和推理后端保持可编辑，便于微调和替换。</p></div>
+        <form id="configForm" class="config-layout">
+          <section class="panel config-panel"><div class="panel-heading"><div><p class="eyebrow">CAPTURE</p><h3>屏幕捕获</h3></div></div><div class="field-row"><label>目标帧率<input id="cfgCaptureFps" type="number" min="1" max="120" step="1"></label><label>输出编号<input id="cfgCaptureOutput" type="number" min="0" step="1"></label></div></section>
+          <section class="panel config-panel"><div class="panel-heading"><div><p class="eyebrow">DETECTION</p><h3>实时检测</h3></div></div><label class="toggle-row"><span><b>启用检测</b><small>常驻实时视觉模型</small></span><input id="cfgDetectionEnabled" type="checkbox"><i class="toggle"></i></label><div class="field-row"><label>权重路径<input id="cfgDetectionWeights" type="text" spellcheck="false"></label><label>设备<select id="cfgDetectionDevice"><option value="cuda">CUDA</option><option value="cpu">CPU</option></select></label></div><div class="field-row"><label>输入尺寸<input id="cfgDetectionImgsz" type="text" inputmode="numeric" placeholder="544 或 544,960" spellcheck="false"></label><label>置信度<input id="cfgDetectionConfidence" type="number" min="0" max="1" step="0.01"></label></div></section>
+          <section class="panel config-panel"><div class="panel-heading"><div><p class="eyebrow">OCR / SAM</p><h3>按需理解</h3></div></div><label class="toggle-row"><span><b>启用 OCR</b><small>按间隔读取屏幕文字</small></span><input id="cfgOcrEnabled" type="checkbox"><i class="toggle"></i></label><div class="field-row"><label>OCR 间隔（帧）<input id="cfgOcrInterval" type="number" min="1" step="1"></label><label>OCR 设备<select id="cfgOcrDevice"><option value="cuda">CUDA</option><option value="cpu">CPU</option></select></label></div><label class="toggle-row"><span><b>启用 SAM</b><small>事件触发精细轮廓</small></span><input id="cfgSamEnabled" type="checkbox"><i class="toggle"></i></label><label>分割权重路径<input id="cfgSamWeights" type="text" spellcheck="false"></label></section>
+          <section class="panel config-panel"><div class="panel-heading"><div><p class="eyebrow">REASONER</p><h3>场景理解</h3></div></div><label class="toggle-row"><span><b>启用 VLM / LLM</b><small>低频异步生成文本反馈</small></span><input id="cfgReasonerEnabled" type="checkbox"><i class="toggle"></i></label><div class="field-row"><label>后端<select id="cfgReasonerBackend"><option value="local">本地 Transformers</option><option value="endpoint">远程 Endpoint</option></select></label><label>调用间隔（秒）<input id="cfgReasonerInterval" type="number" min="0.1" step="0.1"></label></div><label>模型标识<input id="cfgReasonerModel" type="text" spellcheck="false"></label><label>Endpoint<input id="cfgReasonerEndpoint" type="url" placeholder="可选"></label><label>理解目标<textarea id="cfgReasonerGoal" rows="3" placeholder="例如：判断界面状态并给出下一步操作"></textarea></label></section>
+          <section class="panel config-panel"><div class="panel-heading"><div><p class="eyebrow">OUTPUT & AUTOMATION</p><h3>输出与安全</h3></div></div><label class="toggle-row"><span><b>绘制屏幕 Overlay</b><small>只绘制结构化结果，不打开预览窗</small></span><input id="cfgOverlay" type="checkbox"><i class="toggle"></i></label><label class="toggle-row warning-toggle"><span><b>允许输入自动化</b><small>关闭时只生成并记录动作</small></span><input id="cfgAutomation" type="checkbox"><i class="toggle"></i></label><label class="toggle-row"><span><b>演练模式（Dry run）</b><small>不调用真实鼠标键盘</small></span><input id="cfgDryRun" type="checkbox"><i class="toggle"></i></label></section>
+          <div class="config-actions"><button type="submit" class="button button-primary">保存配置</button><button type="button" class="button button-ghost" id="reloadConfigButton">撤销修改</button><span id="configStatus" class="form-status"></span></div>
+        </form>
+      </section>
+
+      <section class="view" id="view-logs">
+        <div class="section-intro log-intro"><div><p class="eyebrow">SYSTEM LOG</p><h2>运行日志</h2><p>后端模型准备、管线状态和输入门控会在这里留下可追踪记录。</p></div><button class="button button-ghost" id="clearLogViewButton">清空视图</button></div>
+        <section class="panel log-panel"><div class="log-toolbar"><span id="logCount">0 条记录</span><div class="log-filters"><button class="filter active" data-log-filter="all">全部</button><button class="filter" data-log-filter="info">INFO</button><button class="filter" data-log-filter="warn">WARN</button><button class="filter" data-log-filter="error">ERROR</button></div></div><div id="logsList" class="logs-list"></div></section>
+      </section>
+    </main>
+  </div>
+  <script src="app.js" defer></script>
+</body>
+</html>
+

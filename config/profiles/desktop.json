@@ -1,0 +1,12 @@
+{
+  "name": "Desktop",
+  "mode": "general",
+  "capture": {"backend": "auto", "fps": 30, "roi": null},
+  "vision_backend": "yolo",
+  "detection": {"enabled": true},
+  "ocr": {"enabled": true, "interval": 6},
+  "sam": {"enabled": false},
+  "reasoner": {"enabled": true, "interval": 1.0},
+  "latency_budget_ms": 150,
+  "action_policy": "dry_run"
+}

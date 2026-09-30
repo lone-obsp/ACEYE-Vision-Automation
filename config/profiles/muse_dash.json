@@ -1,0 +1,139 @@
+{
+  "name": "Muse Dash",
+  "mode": "rhythm",
+  "game": "muse_dash",
+  "capture": {
+    "backend": "shared",
+    "fps": 120,
+    "roi": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "roi": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "roi_capture": true,
+  "vision_backend": "rhythm_cv",
+  "capture_game_window": true,
+  "foreground": {
+    "process_names": [
+      "musedash",
+      "muse_dash",
+      "musedashunity"
+    ],
+    "pause_when_not_foreground": true
+  },
+  "lanes": 2,
+  "input_mapping": [
+    "f",
+    "j"
+  ],
+  "judge": {
+    "up": {
+      "center": [
+        0.21,
+        0.347
+      ],
+      "action": "f"
+    },
+    "down": {
+      "center": [
+        0.21,
+        0.625
+      ],
+      "action": "j"
+    }
+  },
+  "lane_bands": {
+    "up": [
+      0.28,
+      0.425
+    ],
+    "down": [
+      0.55,
+      0.71
+    ]
+  },
+  "hue_ranges": {
+    "blue": [
+      185,
+      255
+    ],
+    "purple": [
+      255,
+      320
+    ]
+  },
+  "lane_hues": {
+    "up": [
+      "blue"
+    ],
+    "down": [
+      "purple"
+    ]
+  },
+  "detector": {
+    "min_sat": 0.32,
+    "min_val": 0.3,
+    "min_area": 6,
+    "max_area_frac": 0.02,
+    "max_mask_frac": 0.35,
+    "sample_width": 480,
+    "strategy": "templates",
+    "templates": "templates/muse_dash/manifest.json",
+    "scales": [
+      1.0
+    ],
+    "search_left": 0.215,
+    "search_right": 0.997
+  },
+  "track": {
+    "confirm_frames": 2,
+    "min_speed_px_s": 120,
+    "gate_px": 90,
+    "expire_ms": 260,
+    "static_prune_ms": 450,
+    "max_tracks": 16,
+    "history": 6,
+    "judge_dead_zone_px": 40,
+    "new_track_margin": 0.065,
+    "reference_width": 2560
+  },
+  "timing": {
+    "hit_x": 0.21,
+    "horizon_ms": 150,
+    "stale_ms": 15,
+    "min_speed_px_s": 120,
+    "max_frame_age_ms": 150
+  },
+  "actions": {
+    "tap_duration_ms": 30,
+    "hold_min_ms": 150,
+    "hold_max_ms": 6000,
+    "hold_aspect": 2.0,
+    "hold_min_width_frac": 0.045,
+    "large_width_frac": 0.055,
+    "large_hit_count": 4,
+    "large_hit_interval_ms": 90
+  },
+  "latency_compensation": true,
+  "ocr": {
+    "enabled": false
+  },
+  "sam": {
+    "enabled": false
+  },
+  "vlm": {
+    "enabled": false
+  },
+  "latency_budget_ms": 12,
+  "action_policy": "live",
+  "safety_stop_key": "f8",
+  "calibration_profile": "config/profiles/muse_dash_calibration.json"
+}

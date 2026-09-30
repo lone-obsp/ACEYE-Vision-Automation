@@ -1,0 +1,4 @@
+# Reliable Windows fallback for PaddleOCR. Model weights are downloaded only
+# when the operator explicitly prepares the OCR module.
+paddlepaddle>=3.0,<4
+paddleocr>=3.0,<4

@@ -1,0 +1,7 @@
+# Core vision/model Python packages. This file intentionally excludes PaddleOCR:
+# Windows RTX 50 wheels vary by Python/CUDA combination and must be installed
+# by the module-aware installer with a CPU fallback.
+ultralytics>=8.3.0
+transformers>=4.51
+accelerate>=0.34
+bitsandbytes>=0.43; platform_system == "Windows"

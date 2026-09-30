@@ -1,0 +1,6 @@
+# There is no universal Windows RTX 50 Paddle GPU wheel. The installer tries
+# this file only when -OcrGpu is explicitly supplied and reports failure
+# without blocking the rest of ACEYE. Use the wheel/index documented by the
+# Paddle release that matches the local driver and Python version.
+paddlepaddle-gpu>=3.0,<4
+paddleocr>=3.0,<4

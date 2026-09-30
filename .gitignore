@@ -1,0 +1,59 @@
+out/
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.VC.opendb
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# Build output
+dist/*/.venv/
+dist/*/backend/__pycache__/
+
+# Logs
+*.log
+ACEYE_logs/
+
+# Runtime files
+config/*.json.bak
+
+# OS
+Thumbs.db
+.DS_Store
+# Demo outputs
+outputs/
+
+# AI model files
+*.pt
+*.pth
+*.onnx
+
+# Cache
+*.tmp
+*.cache
+# Build and duplicated packages
+/dist/
+/build/
+/outputs/
+
+# Python environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Model weights
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# Runtime logs
+*.log

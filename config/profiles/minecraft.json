@@ -1,0 +1,13 @@
+{
+  "name": "Minecraft",
+  "mode": "agent",
+  "game": "minecraft",
+  "capture": {"backend": "auto", "fps": 30, "roi": null},
+  "vision_backend": "yolo",
+  "ocr": {"enabled": true, "interval": 6},
+  "sam": {"enabled": false},
+  "vlm": {"enabled": true, "interval": 1.0},
+  "world_state": {"enabled": true, "history_length": 200},
+  "latency_budget_ms": 500,
+  "action_policy": "dry_run"
+}

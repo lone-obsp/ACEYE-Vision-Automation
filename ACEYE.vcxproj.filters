@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件"><UniqueIdentifier>{A03F1E1A-4DA0-4F70-9E4D-7E68F116AA01}</UniqueIdentifier><Extensions>cpp;c;cc;cxx</Extensions></Filter>
+    <Filter Include="头文件"><UniqueIdentifier>{FFB3150A-6C9B-46C5-B02B-B736ECDFBB76}</UniqueIdentifier><Extensions>h;hh;hpp;hxx</Extensions></Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Architecture.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\AceyeRuntime.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\ScreenCapture.cpp"><Filter>源文件</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\aceye\AceyeRuntime.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="include\aceye\Config.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="include\aceye\FrameBuffer.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="include\aceye\LatestFrameQueue.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="include\aceye\ModuleInterfaces.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="include\aceye\RuntimeTypes.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="include\aceye\ScreenCapture.h"><Filter>头文件</Filter></ClInclude>
+  </ItemGroup>
+</Project>
